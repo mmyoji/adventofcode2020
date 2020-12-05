@@ -57,7 +57,7 @@ func Day2() {
 	lines, err := getLines("inputs/day2.txt")
 	fatal(err)
 
-	var numOfValid = 0
+	numOfValid := 0
 
 	for _, l := range lines {
 		c := buildChecker(l)
