@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	Day2()
+	Day3()
 }
 
 func getLines(pathname string) ([]string, error) {
