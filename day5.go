@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 )
 
 var rows = genRows()
@@ -15,7 +16,8 @@ func Day5() {
 	maxID := 0
 
 	for _, l := range lines {
-		id := getID(l)
+		s := seat{raw: l}
+		id := s.getID()
 		if maxID < id {
 			maxID = id
 		}
@@ -45,43 +47,57 @@ func genColumns() []int {
 	return tmpColumns
 }
 
-func getID(line string) int {
-	tmpRows := make([]int, len(rows))
-	tmpColumns := make([]int, len(columns))
-	var row int
-	var column int
+type seat struct {
+	_rows    []int
+	_columns []int
+	raw      string
+	row      int
+	column   int
+}
 
-	copy(tmpRows, rows)
-	copy(tmpColumns, columns)
+func (s seat) getID() int {
+	ss := strings.Split(s.raw, "")
 
-	for i := 0; i < len(line); i++ {
-		p := string(line[i])
+	s.row = s.getRow(ss[0:7])
+	s.column = s.getColumn(ss[7:len(ss)])
 
-		// F or B
-		if i < 7 {
-			if p == "F" {
-				tmpRows = tmpRows[0:(len(tmpRows) / 2)]
-			} else {
-				tmpRows = tmpRows[(len(tmpRows) / 2):len(tmpRows)]
-			}
+	return s.row*8 + s.column
+}
 
-			if len(tmpRows) == 1 {
-				row = tmpRows[0]
-			}
-			continue
-		}
+func (s seat) getRow(ps []string) int {
+	s._rows = make([]int, len(rows))
+	copy(s._rows, rows)
 
-		// L or R
-		if p == "L" {
-			tmpColumns = tmpColumns[0:(len(tmpColumns) / 2)]
+	for _, p := range ps {
+		if p == "F" {
+			s._rows = s._rows[0:(len(s._rows) / 2)]
 		} else {
-			tmpColumns = tmpColumns[(len(tmpColumns) / 2):len(tmpColumns)]
+			s._rows = s._rows[(len(s._rows) / 2):len(s._rows)]
 		}
-		if len(tmpColumns) == 1 {
-			column = tmpColumns[0]
+
+		if len(s._rows) == 1 {
 			break
 		}
 	}
 
-	return row*8 + column
+	return s._rows[0]
+}
+
+func (s seat) getColumn(ps []string) int {
+	s._columns = make([]int, len(columns))
+	copy(s._columns, columns)
+
+	for _, p := range ps {
+		if p == "L" {
+			s._columns = s._columns[0:(len(s._columns) / 2)]
+		} else {
+			s._columns = s._columns[(len(s._columns) / 2):len(s._columns)]
+		}
+
+		if len(s._columns) == 1 {
+			break
+		}
+	}
+
+	return s._columns[0]
 }
