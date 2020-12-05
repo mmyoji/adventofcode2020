@@ -9,9 +9,7 @@ const treeMark = "#"
 
 // Day3 shows the answer.
 func Day3() {
-	fmt.Println("Day3:")
-
-	lines, err := getLines("day3.input.txt")
+	lines, err := getLines("inputs/day3.txt")
 	if err != nil {
 		log.Fatal(err)
 	}

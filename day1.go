@@ -8,10 +8,8 @@ import (
 
 // Day1 shows the answer
 func Day1() {
-	fmt.Println("Day 1:")
-
 	var inputs []int
-	lines, err := getLines("day1.input.txt")
+	lines, err := getLines("inputs/day1.txt")
 	if err != nil {
 		log.Fatal(err)
 	}

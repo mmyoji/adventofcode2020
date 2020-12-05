@@ -10,9 +10,7 @@ var columns = genColumns()
 
 // Day5 shows the answer.
 func Day5() {
-	fmt.Println("Day5:")
-
-	lines, err := getLines("day5.input.txt")
+	lines, err := getLines("inputs/day5.txt")
 	if err != nil {
 		log.Fatal(err)
 	}

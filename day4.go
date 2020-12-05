@@ -67,9 +67,7 @@ func (pp passport) isValid() bool {
 
 // Day4 shows the answer.
 func Day4() {
-	fmt.Println("Day4:")
-
-	lines, err := getLines("day4.input.txt")
+	lines, err := getLines("inputs/day4.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
