@@ -1,42 +1,52 @@
 package main
 
 import (
+	"errors"
 	"fmt"
-	"log"
 	"strconv"
 )
 
 // Day1 shows the answer
 func Day1() {
-	var inputs []int
 	lines, err := getLines("inputs/day1.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
+	fatal(err)
 
+	inputs, err := getInputs(lines)
+	fatal(err)
+
+	for i, n := range inputs {
+		m, err := find(inputs[i+1:len(inputs)], func(j int) bool {
+			return (n + j) == 2020
+		})
+
+		if err != nil {
+			continue
+		}
+
+		fmt.Println(fmt.Sprintf("answer: %d\n", n*m))
+		// 806656
+	}
+}
+
+func getInputs(lines []string) ([]int, error) {
+	var inputs []int
 	for _, l := range lines {
 		i, err := strconv.Atoi(l)
 		if err != nil {
-			log.Fatalf("Failed to parse line: %s", err)
+			return inputs, fmt.Errorf("Failed to parse line: %s", err)
 		}
 		inputs = append(inputs, i)
 	}
 
-	var n int
-	var m int
+	return inputs, nil
+}
 
-	for i := 0; i < len(inputs); i++ {
-		n = inputs[i]
-		for j := 0; j < len(inputs); j++ {
-			m = inputs[j]
-			if i == j {
-				continue
-			}
-			if (n + m) == 2020 {
-				fmt.Println(fmt.Sprintf("answer: %d\n", n*m))
-				// 806656
-				return
-			}
+func find(items []int, fn func(int) bool) (int, error) {
+	for _, i := range items {
+		if fn(i) {
+			return i, nil
 		}
 	}
+
+	return 0, errors.New("Not found")
 }

@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 )
 
@@ -27,4 +28,10 @@ func getLines(pathname string) ([]string, error) {
 	file.Close()
 
 	return lines, nil
+}
+
+func fatal(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
 }
