@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 )
 
 var rows = genRows()
@@ -11,9 +10,7 @@ var columns = genColumns()
 // Day5 shows the answer.
 func Day5() {
 	lines, err := getLines("inputs/day5.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
+	fatal(err)
 
 	maxID := 0
 

@@ -55,9 +55,7 @@ func (c checker) isValid() bool {
 // Day2 shows the answer.
 func Day2() {
 	lines, err := getLines("inputs/day2.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
+	fatal(err)
 
 	var numOfValid = 0
 

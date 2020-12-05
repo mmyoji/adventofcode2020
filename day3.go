@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 )
 
 const treeMark = "#"
@@ -10,9 +9,7 @@ const treeMark = "#"
 // Day3 shows the answer.
 func Day3() {
 	lines, err := getLines("inputs/day3.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
+	fatal(err)
 
 	treesCount := 0
 	hPos := 0

@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"strings"
 )
 
@@ -68,9 +67,7 @@ func (pp passport) isValid() bool {
 // Day4 shows the answer.
 func Day4() {
 	lines, err := getLines("inputs/day4.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
+	fatal(err)
 
 	ppIndex := 0
 	ppStrings := []string{}
