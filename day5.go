@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strings"
 )
 
 var rows = genRows()
@@ -56,20 +55,18 @@ type seat struct {
 }
 
 func (s seat) getID() int {
-	ss := strings.Split(s.raw, "")
-
-	s.row = s.getRow(ss[0:7])
-	s.column = s.getColumn(ss[7:len(ss)])
+	s.row = s.getRow(s.raw[0:7])
+	s.column = s.getColumn(s.raw[7:len(s.raw)])
 
 	return s.row*8 + s.column
 }
 
-func (s seat) getRow(ps []string) int {
+func (s seat) getRow(ps string) int {
 	s._rows = make([]int, len(rows))
 	copy(s._rows, rows)
 
 	for _, p := range ps {
-		if p == "F" {
+		if p == 'F' {
 			s._rows = s._rows[0:(len(s._rows) / 2)]
 		} else {
 			s._rows = s._rows[(len(s._rows) / 2):len(s._rows)]
@@ -83,12 +80,12 @@ func (s seat) getRow(ps []string) int {
 	return s._rows[0]
 }
 
-func (s seat) getColumn(ps []string) int {
+func (s seat) getColumn(ps string) int {
 	s._columns = make([]int, len(columns))
 	copy(s._columns, columns)
 
 	for _, p := range ps {
-		if p == "L" {
+		if p == 'L' {
 			s._columns = s._columns[0:(len(s._columns) / 2)]
 		} else {
 			s._columns = s._columns[(len(s._columns) / 2):len(s._columns)]
