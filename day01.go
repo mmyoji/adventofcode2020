@@ -8,7 +8,7 @@ import (
 
 // Day1 shows the answer
 func Day1() {
-	lines, err := getLines("inputs/day1.txt")
+	lines, err := getLines("inputs/day01.txt")
 	fatal(err)
 
 	inputs, err := getInputs(lines)

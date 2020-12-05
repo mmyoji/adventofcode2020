@@ -8,7 +8,7 @@ const treeMark = "#"
 
 // Day3 shows the answer.
 func Day3() {
-	lines, err := getLines("inputs/day3.txt")
+	lines, err := getLines("inputs/day03.txt")
 	fatal(err)
 
 	treesCount := 0

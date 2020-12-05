@@ -9,7 +9,7 @@ var columns = genNumSlice(8)
 
 // Day5 shows the answer.
 func Day5() {
-	lines, err := getLines("inputs/day5.txt")
+	lines, err := getLines("inputs/day05.txt")
 	fatal(err)
 
 	maxID := 0

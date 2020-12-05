@@ -66,7 +66,7 @@ func (pp passport) isValid() bool {
 
 // Day4 shows the answer.
 func Day4() {
-	lines, err := getLines("inputs/day4.txt")
+	lines, err := getLines("inputs/day04.txt")
 	fatal(err)
 
 	ppIndex := 0
