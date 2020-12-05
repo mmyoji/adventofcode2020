@@ -4,8 +4,8 @@ import (
 	"fmt"
 )
 
-var rows = genRows()
-var columns = genColumns()
+var rows = genNumSlice(128)
+var columns = genNumSlice(8)
 
 // Day5 shows the answer.
 func Day5() {
@@ -26,75 +26,44 @@ func Day5() {
 	// 850
 }
 
-func genRows() []int {
-	var tmpRows []int
+func genNumSlice(max int) []int {
+	var tmp []int
 
-	for i := 0; i < 128; i++ {
-		tmpRows = append(tmpRows, i)
+	for i := 0; i < max; i++ {
+		tmp = append(tmp, i)
 	}
 
-	return tmpRows
-}
-
-func genColumns() []int {
-	var tmpColumns []int
-
-	for i := 0; i < 8; i++ {
-		tmpColumns = append(tmpColumns, i)
-	}
-
-	return tmpColumns
+	return tmp
 }
 
 type seat struct {
-	_rows    []int
-	_columns []int
-	raw      string
-	row      int
-	column   int
+	raw    string
+	row    int
+	column int
 }
 
 func (s seat) getID() int {
-	s.row = s.getRow(s.raw[0:7])
-	s.column = s.getColumn(s.raw[7:len(s.raw)])
+	s.row = s.binarySearch(s.raw[0:7], rows, 'F')
+	s.column = s.binarySearch(s.raw[7:len(s.raw)], columns, 'L')
 
 	return s.row*8 + s.column
 }
 
-func (s seat) getRow(ps string) int {
-	s._rows = make([]int, len(rows))
-	copy(s._rows, rows)
+func (s seat) binarySearch(target string, src []int, c rune) int {
+	dest := make([]int, len(src))
+	copy(dest, src)
 
-	for _, p := range ps {
-		if p == 'F' {
-			s._rows = s._rows[0:(len(s._rows) / 2)]
+	for _, p := range target {
+		if p == c {
+			dest = dest[0:(len(dest) / 2)]
 		} else {
-			s._rows = s._rows[(len(s._rows) / 2):len(s._rows)]
+			dest = dest[(len(dest) / 2):len(dest)]
 		}
 
-		if len(s._rows) == 1 {
+		if len(dest) == 1 {
 			break
 		}
 	}
 
-	return s._rows[0]
-}
-
-func (s seat) getColumn(ps string) int {
-	s._columns = make([]int, len(columns))
-	copy(s._columns, columns)
-
-	for _, p := range ps {
-		if p == 'L' {
-			s._columns = s._columns[0:(len(s._columns) / 2)]
-		} else {
-			s._columns = s._columns[(len(s._columns) / 2):len(s._columns)]
-		}
-
-		if len(s._columns) == 1 {
-			break
-		}
-	}
-
-	return s._columns[0]
+	return dest[0]
 }
