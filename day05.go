@@ -57,7 +57,7 @@ func (s seat) binarySearch(target string, src []int, c rune) int {
 		if p == c {
 			dest = dest[0:(len(dest) / 2)]
 		} else {
-			dest = dest[(len(dest) / 2):len(dest)]
+			dest = dest[(len(dest) / 2):]
 		}
 
 		if len(dest) == 1 {

@@ -15,7 +15,7 @@ func Day1() {
 	fatal(err)
 
 	for i, n := range inputs {
-		m, err := find(inputs[i+1:len(inputs)], func(j int) bool {
+		m, err := find(inputs[i+1:], func(j int) bool {
 			return (n + j) == 2020
 		})
 
