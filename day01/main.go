@@ -4,15 +4,16 @@ import (
 	"errors"
 	"fmt"
 	"strconv"
+
+	"github.com/mmyoji/aoc-2020/utils"
 )
 
-// Day1 shows the answer
-func Day1() {
-	lines, err := getLines("inputs/day01.txt")
-	fatal(err)
+func main() {
+	lines, err := utils.GetLines("day01/inputs.txt")
+	utils.Fatal(err)
 
 	inputs, err := getInputs(lines)
-	fatal(err)
+	utils.Fatal(err)
 
 	for i, n := range inputs {
 		m, err := find(inputs[i+1:], func(j int) bool {

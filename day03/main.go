@@ -2,14 +2,15 @@ package main
 
 import (
 	"fmt"
+
+	"github.com/mmyoji/aoc-2020/utils"
 )
 
 const treeMark = "#"
 
-// Day3 shows the answer.
-func Day3() {
-	lines, err := getLines("inputs/day03.txt")
-	fatal(err)
+func main() {
+	lines, err := utils.GetLines("day03/inputs.txt")
+	utils.Fatal(err)
 
 	treesCount := 0
 	hPos := 0

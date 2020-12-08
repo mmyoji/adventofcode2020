@@ -1,11 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
 
-// Day6 shows the answer.
-func Day6() {
-	lines, err := getLines("inputs/day06.txt")
-	fatal(err)
+	"github.com/mmyoji/aoc-2020/utils"
+)
+
+func main() {
+	lines, err := utils.GetLines("day06/inputs.txt")
+	utils.Fatal(err)
 
 	g := &groups{count: 0}
 	g.setItems(lines)

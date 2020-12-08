@@ -3,14 +3,15 @@ package main
 import (
 	"fmt"
 	"strings"
+
+	"github.com/mmyoji/aoc-2020/utils"
 )
 
 const colorShinyGold = "shiny gold"
 
-// Day7 shows the answer.
-func Day7() {
-	lines, err := getLines("inputs/day07.txt")
-	fatal(err)
+func main() {
+	lines, err := utils.GetLines("day07/inputs.txt")
+	utils.Fatal(err)
 
 	colorMappings := make(map[string][]string)
 
@@ -50,6 +51,7 @@ func Day7() {
 	}
 
 	fmt.Printf("answer: %d\n", len(usedColors))
+	// 192
 }
 
 func parseInnerColors(str string) []string {

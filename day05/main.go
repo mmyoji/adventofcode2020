@@ -2,15 +2,16 @@ package main
 
 import (
 	"fmt"
+
+	"github.com/mmyoji/aoc-2020/utils"
 )
 
 var rows = genNumSlice(128)
 var columns = genNumSlice(8)
 
-// Day5 shows the answer.
-func Day5() {
-	lines, err := getLines("inputs/day05.txt")
-	fatal(err)
+func main() {
+	lines, err := utils.GetLines("day05/inputs.txt")
+	utils.Fatal(err)
 
 	maxID := 0
 

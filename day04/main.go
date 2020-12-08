@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"strings"
+
+	"github.com/mmyoji/aoc-2020/utils"
 )
 
 type passport struct {
@@ -64,10 +66,9 @@ func (pp passport) isValid() bool {
 	return true
 }
 
-// Day4 shows the answer.
-func Day4() {
-	lines, err := getLines("inputs/day04.txt")
-	fatal(err)
+func main() {
+	lines, err := utils.GetLines("day04/inputs.txt")
+	utils.Fatal(err)
 
 	ppIndex := 0
 	ppStrings := []string{}

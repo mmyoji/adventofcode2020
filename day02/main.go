@@ -5,6 +5,8 @@ import (
 	"log"
 	"strconv"
 	"strings"
+
+	"github.com/mmyoji/aoc-2020/utils"
 )
 
 type checker struct {
@@ -52,10 +54,9 @@ func (c checker) isValid() bool {
 	return true
 }
 
-// Day2 shows the answer.
-func Day2() {
-	lines, err := getLines("inputs/day02.txt")
-	fatal(err)
+func main() {
+	lines, err := utils.GetLines("day02/inputs.txt")
+	utils.Fatal(err)
 
 	numOfValid := 0
 
