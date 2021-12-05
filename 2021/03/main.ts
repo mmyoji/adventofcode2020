@@ -1,5 +1,6 @@
 import { fetchData } from "./input.ts";
 import { run as partOne } from "./part-one.ts";
+import { run as partTwo } from "./part-two.ts";
 
 /**
  * binary string -> Number :: parseInt("00100", 2)
@@ -7,4 +8,5 @@ import { run as partOne } from "./part-one.ts";
  */
 
 const data = await fetchData();
-partOne(data);
+// partOne(data);
+partTwo(data);
