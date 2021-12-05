@@ -7,9 +7,11 @@ type Row = RowItem[];
 
 export class Board {
   rows: Row[];
+  won: boolean;
 
   constructor(data: string[]) {
     this.rows = this.#buildRows(data);
+    this.won = false;
   }
 
   open(target: number): void {
@@ -28,6 +30,7 @@ export class Board {
     // horizontal
     for (const row of this.rows) {
       if (row.every(opening)) {
+        this.won = true;
         return true;
       }
     }
@@ -36,6 +39,7 @@ export class Board {
     for (let i = 0; i < 5; i++) {
       const column = this.rows.map((row) => row[i]);
       if (column.every(opening)) {
+        this.won = true;
         return true;
       }
     }
