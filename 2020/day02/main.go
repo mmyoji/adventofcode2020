@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/mmyoji/aoc-2020/utils"
+	"github.com/mmyoji/aoc/2020/utils"
 )
 
 type checker struct {

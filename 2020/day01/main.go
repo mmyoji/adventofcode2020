@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/mmyoji/aoc-2020/utils"
+	"github.com/mmyoji/aoc/2020/utils"
 )
 
 func main() {

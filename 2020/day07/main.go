@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/mmyoji/aoc-2020/utils"
+	"github.com/mmyoji/aoc/2020/utils"
 )
 
 const colorShinyGold = "shiny gold"

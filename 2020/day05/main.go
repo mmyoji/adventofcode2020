@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/mmyoji/aoc-2020/utils"
+	"github.com/mmyoji/aoc/2020/utils"
 )
 
 var rows = genNumSlice(128)
