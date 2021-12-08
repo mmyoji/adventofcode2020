@@ -25,16 +25,12 @@ export type Output = string;
  * 長さが 6 の残り2つのうち, "8" と比較して "e" が残る方が "9", そうじゃない方が "0"
  */
 
-function strToArray(str: string): string[] {
-  return Array.from(str);
-}
-
 /**
  * a - b for string.
  */
 function subtract(a: string, b: string): string {
-  const aArr = strToArray(a);
-  const bArr = strToArray(b);
+  const aArr = Array.from(a);
+  const bArr = Array.from(b);
 
   const diff = aArr.filter((char) => !bArr.includes(char));
   return diff.join("");
@@ -56,7 +52,7 @@ function findFives(fives: string[], c: string, f: string) {
   let five = "";
 
   for (const str of fives) {
-    const arr = strToArray(str);
+    const arr = Array.from(str);
     if (arr.includes(c) && arr.includes(f)) {
       three = str;
       continue;
