@@ -98,7 +98,7 @@ export class Line {
   }
 
   analyze(): number {
-    const mapping = this.analyzePatterns();
+    const mapping = this.#analyzePatterns();
 
     const result: string[] = [];
     for (const output of this.outputs) {
@@ -116,7 +116,7 @@ export class Line {
     return parseInt(result.join(""), 10);
   }
 
-  analyzePatterns(): Record<string, string> {
+  #analyzePatterns(): Record<string, string> {
     const mapping: Record<string, string> = {};
     const fives: string[] = [];
     const sixes: string[] = [];
