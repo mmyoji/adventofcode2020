@@ -4,31 +4,56 @@ export type Pattern = string;
 export type Output = string;
 
 /**
- * "0" ... 6
- * "1" ... 2 (uniq)
- * "2" ... 5
- * "3" ... 5
- * "4" ... 4 (uniq)
- * "5" ... 5
- * "6" ... 6
- * "7" ... 3 (uniq)
- * "8" ... 7 (uniq)
- * "9" ... 6
+ *   0:      1:      2:      3:      4:
+ *  aaaa    ....    aaaa    aaaa    ....
+ * b    c  .    c  .    c  .    c  b    c
+ * b    c  .    c  .    c  .    c  b    c
+ *  ....    ....    dddd    dddd    dddd
+ * e    f  .    f  e    .  .    f  .    f
+ * e    f  .    f  e    .  .    f  .    f
+ *  gggg    ....    gggg    gggg    ....
  *
- * 長さが 2 と 3 の文字列を比較して、 "a" の位置を特定.
- * 長さが 6 の 3つのうち,
- *   - "1" を含まないやつが "6"
- *   - "c" と "f" も特定
- * 長さが 5 の 3つのうち,
- *   - "c" & "f" 両方あるのが "3"
- *   - "c" しかないのが "2"
- *   - "f" しかないのが "5"
- * "2" と "3" を比較して "e" を特定
- * 長さが 6 の残り2つのうち, "8" と比較して "e" が残る方が "9", そうじゃない方が "0"
+ *   5:      6:      7:      8:      9:
+ *  aaaa    aaaa    aaaa    aaaa    aaaa
+ * b    .  b    .  .    c  b    c  b    c
+ * b    .  b    .  .    c  b    c  b    c
+ *  dddd    dddd    ....    dddd    dddd
+ * .    f  e    f  .    f  e    f  .    f
+ * .    f  e    f  .    f  e    f  .    f
+ *  gggg    gggg    ....    gggg    gggg
+ *
+ * | Number | Length | Unique |
+ * ----------------------------
+ * |  "0"   |   6    |        |
+ * |  "1"   |   2    |    x   |
+ * |  "2"   |   5    |        |
+ * |  "3"   |   5    |        |
+ * |  "4"   |   4    |    x   |
+ * |  "5"   |   5    |        |
+ * |  "6"   |   6    |        |
+ * |  "7"   |   3    |    x   |
+ * |  "8"   |   7    |        |
+ * |  "9"   |   6    |    x   |
+ *
+ * [Part 2 Solution]
+ * 1. Find "1", "4", "7" and "8" with its length.
+ * 2. Get "a" by comparing "1" and "7"
+ * 3. Among 6 length numbers,
+ *   a. "6" doesn't contain "1"
+ *   b. and get "c" and "f"
+ * 4. Among 5 length numbers,
+ *   a. "3" has both "c" and "f"
+ *   b. "2" has only "c"
+ *   c. "5" has only "f"
+ * 5. Get "e" by comparing "2" and "3"
+ * 6. Among the rest of 6 length numbers,
+ *   a. "9" lefts "e" by comparing "8"
+ *   b. and the other is "0"
  */
 
 function findSix(sixes: string[], one: string): string {
   for (const str of sixes) {
+    // Both "0" and "9" gets 4 length, "6" gets 5.
     if (subtract(str, one).length !== 4) {
       return str;
     }
