@@ -1,3 +1,5 @@
+import { subtract, sort } from "./strings.ts";
+
 export type Pattern = string;
 export type Output = string;
 
@@ -24,17 +26,6 @@ export type Output = string;
  * "2" と "3" を比較して "e" を特定
  * 長さが 6 の残り2つのうち, "8" と比較して "e" が残る方が "9", そうじゃない方が "0"
  */
-
-/**
- * a - b for string.
- */
-function subtract(a: string, b: string): string {
-  const aArr = Array.from(a);
-  const bArr = Array.from(b);
-
-  const diff = aArr.filter((char) => !bArr.includes(char));
-  return diff.join("");
-}
 
 function findSix(sixes: string[], one: string): string {
   for (const str of sixes) {
@@ -72,10 +63,6 @@ function findFives(fives: string[], c: string, f: string) {
   return [two, three, five];
 }
 
-function sortStr(s: string): string {
-  return Array.from(s).sort().join("");
-}
-
 export class Line {
   patterns: Pattern[];
   outputs: Output[];
@@ -92,7 +79,7 @@ export class Line {
 
     const result: string[] = [];
     for (const output of this.outputs) {
-      const sorted = sortStr(output);
+      const sorted = sort(output);
       if (sorted in mapping) {
         result.push(mapping[sorted]);
         continue;
@@ -170,7 +157,7 @@ export class Line {
 
     const ret: typeof mapping = {};
     for (const key in mapping) {
-      ret[sortStr(mapping[key])] = key;
+      ret[sort(mapping[key])] = key;
     }
 
     return ret;
