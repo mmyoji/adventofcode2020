@@ -122,8 +122,7 @@ export class Line {
     const { numbers, fives, sixes } = this.#getNumbersByLength();
 
     const alphabet: StrMap = {};
-    const a = subtract(numbers["7"], numbers["1"]);
-    alphabet["a"] = a;
+    alphabet["a"] = subtract(numbers["7"], numbers["1"]);
 
     numbers["6"] = findSix(sixes, numbers["1"]);
 
