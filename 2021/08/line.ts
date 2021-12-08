@@ -177,6 +177,7 @@ export class Line {
 
       if (p.length === 7) {
         numbers["8"] = p;
+        continue;
       }
 
       if (p.length === 5) {
