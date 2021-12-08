@@ -1,5 +1,7 @@
 import { subtract, sort } from "./strings.ts";
 
+type StrMap = Record<string, string>;
+
 export type Pattern = string;
 export type Output = string;
 
@@ -63,7 +65,7 @@ function findSix(sixes: string[], one: string): string {
 }
 
 function findFives(fives: string[], c: string, f: string) {
-  const ret: Record<string, string> = {};
+  const ret: StrMap = {};
 
   for (const str of fives) {
     const arr = Array.from(str);
@@ -116,10 +118,10 @@ export class Line {
     return parseInt(result.join(""), 10);
   }
 
-  #analyzePatterns(): Record<string, string> {
+  #analyzePatterns(): StrMap {
     const { numbers, fives, sixes } = this.#getNumbersByLength();
 
-    const alphabet: Record<string, string> = {};
+    const alphabet: StrMap = {};
     const a = subtract(numbers["7"], numbers["1"]);
     alphabet["a"] = a;
 
@@ -145,7 +147,7 @@ export class Line {
       }
     }
 
-    const ret: typeof numbers = {};
+    const ret: StrMap = {};
     for (const key in numbers) {
       ret[sort(numbers[key])] = key;
     }
@@ -154,7 +156,7 @@ export class Line {
   }
 
   #getNumbersByLength() {
-    const numbers: Record<string, string> = {};
+    const numbers: StrMap = {};
     const fives: string[] = [];
     const sixes: string[] = [];
 
