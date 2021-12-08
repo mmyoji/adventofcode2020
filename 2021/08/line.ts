@@ -117,28 +117,65 @@ export class Line {
   }
 
   #analyzePatterns(): Record<string, string> {
-    const mapping: Record<string, string> = {};
+    const { numbers, fives, sixes } = this.#getNumbersByLength();
+
+    const alphabet: Record<string, string> = {};
+    const a = subtract(numbers["7"], numbers["1"]);
+    alphabet["a"] = a;
+
+    numbers["6"] = findSix(sixes, numbers["1"]);
+
+    alphabet["c"] = subtract(numbers["1"], numbers["6"]);
+    alphabet["f"] = subtract(numbers["1"], alphabet["c"]);
+
+    const fivesMap = findFives(fives, alphabet["c"], alphabet["f"]);
+    numbers["2"] = fivesMap["2"];
+    numbers["3"] = fivesMap["3"];
+    numbers["5"] = fivesMap["5"];
+
+    alphabet["e"] = subtract(numbers["2"], numbers["3"]);
+
+    const zeroOrNine = sixes.filter((s) => s != numbers["6"]);
+    for (const s of zeroOrNine) {
+      const c = subtract(numbers["8"], s);
+      if (c === alphabet["e"]) {
+        numbers["9"] = s;
+      } else {
+        numbers["0"] = s;
+      }
+    }
+
+    const ret: typeof numbers = {};
+    for (const key in numbers) {
+      ret[sort(numbers[key])] = key;
+    }
+
+    return ret;
+  }
+
+  #getNumbersByLength() {
+    const numbers: Record<string, string> = {};
     const fives: string[] = [];
     const sixes: string[] = [];
 
     for (const p of this.patterns) {
       if (p.length === 2) {
-        mapping["1"] = p;
+        numbers["1"] = p;
         continue;
       }
 
       if (p.length === 3) {
-        mapping["7"] = p;
+        numbers["7"] = p;
         continue;
       }
 
       if (p.length === 4) {
-        mapping["4"] = p;
+        numbers["4"] = p;
         continue;
       }
 
       if (p.length === 7) {
-        mapping["8"] = p;
+        numbers["8"] = p;
       }
 
       if (p.length === 5) {
@@ -152,38 +189,11 @@ export class Line {
       }
     }
 
-    const alphabet: Record<string, string> = {};
-    const a = subtract(mapping["7"], mapping["1"]);
-    alphabet["a"] = a;
-
-    mapping["6"] = findSix(sixes, mapping["1"]);
-
-    alphabet["c"] = subtract(mapping["1"], mapping["6"]);
-    alphabet["f"] = subtract(mapping["1"], alphabet["c"]);
-
-    const fivesMap = findFives(fives, alphabet["c"], alphabet["f"]);
-    mapping["2"] = fivesMap["2"];
-    mapping["3"] = fivesMap["3"];
-    mapping["5"] = fivesMap["5"];
-
-    alphabet["e"] = subtract(mapping["2"], mapping["3"]);
-
-    const zeroOrNine = sixes.filter((s) => s != mapping["6"]);
-    for (const s of zeroOrNine) {
-      const c = subtract(mapping["8"], s);
-      if (c === alphabet["e"]) {
-        mapping["9"] = s;
-      } else {
-        mapping["0"] = s;
-      }
-    }
-
-    const ret: typeof mapping = {};
-    for (const key in mapping) {
-      ret[sort(mapping[key])] = key;
-    }
-
-    return ret;
+    return {
+      numbers,
+      fives,
+      sixes,
+    };
   }
 
   #buildPatterns(str: string): Pattern[] {
