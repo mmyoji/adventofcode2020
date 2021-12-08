@@ -2,9 +2,6 @@ import { subtract, sort } from "./strings.ts";
 
 type StrMap = Record<string, string>;
 
-export type Pattern = string;
-export type Output = string;
-
 /**
  *   0:      1:      2:      3:      4:
  *  aaaa    ....    aaaa    aaaa    ....
@@ -97,14 +94,14 @@ function findFives(fives: string[], c: string, f: string) {
 }
 
 export class Line {
-  patterns: Pattern[];
-  outputs: Output[];
+  patterns: string[];
+  outputs: string[];
 
   constructor(line: string) {
     const [patterns, outputs] = line.split(" | ");
 
-    this.patterns = this.#buildPatterns(patterns);
-    this.outputs = this.#buildOutputs(outputs);
+    this.patterns = this.#buildItems(patterns, 10);
+    this.outputs = this.#buildItems(outputs, 4);
   }
 
   analyze(): number {
@@ -193,23 +190,13 @@ export class Line {
     };
   }
 
-  #buildPatterns(str: string): Pattern[] {
-    const patterns = str.split(" ");
+  #buildItems(str: string, size: number): string[] {
+    const items = str.split(" ");
 
-    if (patterns.length !== 10) {
-      throw new Error(`Patterns must be 10 but ${patterns.length}`);
+    if (items.length !== size) {
+      throw new Error(`It must have ${size} itesm but ${items.length}`);
     }
 
-    return patterns;
-  }
-
-  #buildOutputs(str: string): Output[] {
-    const outputs = str.split(" ");
-
-    if (outputs.length !== 4) {
-      throw new Error(`Outputs must be 4 but ${outputs.length}`);
-    }
-
-    return outputs;
+    return items;
   }
 }

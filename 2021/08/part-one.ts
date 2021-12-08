@@ -1,6 +1,6 @@
-import type { Output, Line } from "./line.ts";
+import type { Line } from "./line.ts";
 
-export function isTarget(output: Output): boolean {
+export function isTarget(output: string): boolean {
   return [2, 3, 4, 7].includes(output.length);
 }
 
