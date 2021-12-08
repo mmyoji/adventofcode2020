@@ -1,4 +1,4 @@
-import type { Output, Line } from "./input.ts";
+import type { Output, Line } from "./line.ts";
 
 export function isTarget(output: Output): boolean {
   return [2, 3, 4, 7].includes(output.length);
