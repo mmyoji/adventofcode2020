@@ -63,29 +63,27 @@ function findSix(sixes: string[], one: string): string {
 }
 
 function findFives(fives: string[], c: string, f: string) {
-  let two = "";
-  let three = "";
-  let five = "";
+  const ret: Record<string, string> = {};
 
   for (const str of fives) {
     const arr = Array.from(str);
     if (arr.includes(c) && arr.includes(f)) {
-      three = str;
+      ret["3"] = str;
       continue;
     }
 
     if (arr.includes(c)) {
-      two = str;
+      ret["2"] = str;
       continue;
     }
 
     if (arr.includes(f)) {
-      five = str;
+      ret["5"] = str;
       continue;
     }
   }
 
-  return [two, three, five];
+  return ret;
 }
 
 export class Line {
@@ -163,10 +161,10 @@ export class Line {
     alphabet["c"] = subtract(mapping["1"], mapping["6"]);
     alphabet["f"] = subtract(mapping["1"], alphabet["c"]);
 
-    const [two, three, five] = findFives(fives, alphabet["c"], alphabet["f"]);
-    mapping["2"] = two;
-    mapping["3"] = three;
-    mapping["5"] = five;
+    const fivesMap = findFives(fives, alphabet["c"], alphabet["f"]);
+    mapping["2"] = fivesMap["2"];
+    mapping["3"] = fivesMap["3"];
+    mapping["5"] = fivesMap["5"];
 
     alphabet["e"] = subtract(mapping["2"], mapping["3"]);
 
