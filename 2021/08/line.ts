@@ -53,6 +53,14 @@ export type Output = string;
  *   b. and the other is "0"
  */
 
+/* [length]: [number] */
+const uniqByLength: StrMap = {
+  "2": "1",
+  "3": "7",
+  "4": "4",
+  "7": "8",
+};
+
 function findSix(sixes: string[], one: string): string {
   for (const str of sixes) {
     // Both "0" and "9" gets 4 length, "6" gets 5.
@@ -160,32 +168,19 @@ export class Line {
     const sixes: string[] = [];
 
     for (const p of this.patterns) {
-      if (p.length === 2) {
-        numbers["1"] = p;
+      const len = p.length;
+      const lenStr = String(len);
+      if (lenStr in uniqByLength) {
+        numbers[uniqByLength[lenStr]] = p;
         continue;
       }
 
-      if (p.length === 3) {
-        numbers["7"] = p;
-        continue;
-      }
-
-      if (p.length === 4) {
-        numbers["4"] = p;
-        continue;
-      }
-
-      if (p.length === 7) {
-        numbers["8"] = p;
-        continue;
-      }
-
-      if (p.length === 5) {
+      if (len === 5) {
         fives.push(p);
         continue;
       }
 
-      if (p.length === 6) {
+      if (len === 6) {
         sixes.push(p);
         continue;
       }
