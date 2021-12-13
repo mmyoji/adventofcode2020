@@ -1,15 +1,10 @@
-type OpenChunk = "(" | "[" | "{" | "<";
-type CloseChunk = ")" | "]" | "}" | ">";
-
-const OPEN_CHUNKS = ["(", "[", "{", "<"];
-const CLOSE_CHUNKS = [")", "]", "}", ">"];
-
-const CHUNKS: Record<OpenChunk, CloseChunk> = {
-  "(": ")",
-  "[": "]",
-  "{": "}",
-  "<": ">",
-};
+import {
+  CloseChunk,
+  CHUNKS,
+  validate,
+  isOpenChunk,
+  isCloseChunk,
+} from "./chunks.ts";
 
 const POINTS: Record<CloseChunk, number> = {
   ")": 3,
@@ -17,25 +12,6 @@ const POINTS: Record<CloseChunk, number> = {
   "}": 1197,
   ">": 25137,
 };
-
-function isOpenChunk(s: string): s is OpenChunk {
-  return !!s && OPEN_CHUNKS.includes(s);
-}
-
-function isCloseChunk(s: string): s is CloseChunk {
-  return !!s && CLOSE_CHUNKS.includes(s);
-}
-
-function validate(chunk: CloseChunk, chunks: CloseChunk[]): boolean {
-  const arr = [...chunks];
-  const last = arr.pop();
-  if (last == chunk) {
-    chunks.pop();
-    return true;
-  }
-
-  return false;
-}
 
 function findCorrupted(line: string): number {
   const chunks: CloseChunk[] = [];
