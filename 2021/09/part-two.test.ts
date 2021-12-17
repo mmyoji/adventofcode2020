@@ -6,5 +6,5 @@ import { run } from "./part-two.ts";
 Deno.test("run", async () => {
   const data = await fetchData("./sample.txt");
   const value = run(data);
-  assertEquals(value, 2);
+  assertEquals(value, 1134);
 });
