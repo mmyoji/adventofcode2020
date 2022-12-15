@@ -1,4 +1,4 @@
-import { lineStream } from "../utils/line-stream.ts";
+import { lineStream } from "utils/line-stream.ts";
 import { contains } from "./one.ts";
 
 function overwrapped(first: number[], second: number[]): boolean {

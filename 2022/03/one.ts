@@ -1,4 +1,4 @@
-import { lineStream } from "../utils/line-stream.ts";
+import { lineStream } from "utils/line-stream.ts";
 
 function generateAlphabetScore() {
   let start = "a".charCodeAt(0);

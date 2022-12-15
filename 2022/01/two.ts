@@ -1,4 +1,4 @@
-import { lineStream } from "../utils/line-stream.ts";
+import { lineStream } from "utils/line-stream.ts";
 
 export async function getSumOfTop3(path: string): Promise<number> {
   let first = -1;

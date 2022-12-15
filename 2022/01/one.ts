@@ -1,4 +1,4 @@
-import { lineStream } from "../utils/line-stream.ts";
+import { lineStream } from "utils/line-stream.ts";
 
 export async function getMax(path: string): Promise<number> {
   let max = -1;

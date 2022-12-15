@@ -1,4 +1,4 @@
-import { lineStream } from "../utils/line-stream.ts";
+import { lineStream } from "utils/line-stream.ts";
 
 // Question 1:
 // A, X - Rock       -- 1

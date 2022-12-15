@@ -1,4 +1,4 @@
-import { lineStream } from "../utils/line-stream.ts";
+import { lineStream } from "utils/line-stream.ts";
 
 export function contains(first: number[], second: number[]): boolean {
   if (first[0] === second[0] || first[1] === second[1]) {
