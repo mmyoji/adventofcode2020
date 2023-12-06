@@ -54,20 +54,13 @@ function getMapPosition(line: string): number | undefined {
 
 function getMappedValue(target: number, maps: PlantMap[]): number | undefined {
   for (const map of maps) {
-    let src = map.src0;
+    const src = map.src0;
     if (target < src || src + map.range < target) {
       continue;
     }
 
-    let dest = map.dest0;
-    for (let i = 0; i < map.range; i++) {
-      if (target === src) {
-        return dest;
-      }
-
-      src++;
-      dest++;
-    }
+    const diff = target - src;
+    return map.dest0 + diff;
   }
 
   return undefined;
@@ -133,7 +126,23 @@ function parseSeeds(ns: number[]): number[][] {
   return ret;
 }
 
-// TODO: Optimize this. Change algorithms, use workers, etc.
+function calcMin(
+  args: { start: number; range: number; plantMaps: PlantMap[][] },
+): Promise<number> {
+  return new Promise((resolve) => {
+    const worker = new Worker(new URL("./worker.ts", import.meta.url).href, {
+      type: "module",
+    });
+
+    worker.postMessage(args);
+
+    worker.onmessage = (e) => {
+      resolve(e.data);
+    };
+  });
+}
+
+// TODO: Optimize this. Change algorithms, etc.
 export async function question2(path: string) {
   const lines = await readLines(path);
 
@@ -162,27 +171,16 @@ export async function question2(path: string) {
     plantMaps[current].push(parsePlantMap(line));
   }
 
-  let min = Number.MAX_SAFE_INTEGER;
-  for (const [start, range] of seeds) {
-    for (let seed = start; seed < start + range; seed++) {
-      let next = seed;
-      for (const maps of plantMaps) {
-        next = getMappedValue(next, maps) ?? next;
-      }
-      if (next < min) {
-        min = next;
-      }
-    }
-  }
-
-  return min;
+  const ns = await Promise.all(
+    seeds.map(([start, range]) => calcMin({ start, range, plantMaps })),
+  );
+  return Math.min(...ns);
 }
 
 if (import.meta.main) {
-  // console.log(`Q1:`, await question1("05/inputs.txt"));
-  // // answer: 551761867
+  console.log(`Q1:`, await question1("05/inputs.txt"));
+  // answer: 551761867
 
-  // FIXME: This takes too much time.
   console.log(`Q2:`, await question2("05/inputs.txt"));
-  // answer:
+  // answer: 57451710 (wrong)
 }
