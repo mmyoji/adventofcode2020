@@ -62,14 +62,14 @@ function getScore(opponent: HAND, myHand: STRATEGY_HAND): number {
     }
     default: {
       throw new Error(
-        `Unexpected combinations: me=${me}, opponent=${opponent}`
+        `Unexpected combinations: me=${me}, opponent=${opponent}`,
       );
     }
   }
 }
 
 export async function answer1(path: string) {
-  const [rstream, f] = await lineStream(path);
+  const [rstream, close] = await lineStream(path);
 
   let total = 0;
 
@@ -82,7 +82,7 @@ export async function answer1(path: string) {
     total += getScore(opponent as HAND, myStrategy as STRATEGY_HAND);
   }
 
-  f.close();
+  close();
 
   return total;
 }

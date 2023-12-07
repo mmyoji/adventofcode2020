@@ -56,7 +56,7 @@ function findCommonChar(group: string[]): string {
 }
 
 export async function two(path: string): Promise<number> {
-  const [stream, f] = await lineStream(path);
+  const [stream, close] = await lineStream(path);
 
   let sum = 0;
   let group: string[] = [];
@@ -83,7 +83,7 @@ export async function two(path: string): Promise<number> {
     group = [];
   }
 
-  f.close();
+  close();
 
   return sum;
 }

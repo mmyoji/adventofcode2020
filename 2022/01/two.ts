@@ -5,7 +5,7 @@ export async function getSumOfTop3(path: string): Promise<number> {
   let second = -1;
   let third = -1;
 
-  const [rstream, f] = await lineStream(path);
+  const [rstream, close] = await lineStream(path);
 
   let tmp = 0;
   for await (const rawLine of rstream) {
@@ -30,7 +30,7 @@ export async function getSumOfTop3(path: string): Promise<number> {
     tmp += n;
   }
 
-  f.close();
+  close();
 
   return first + second + third;
 }

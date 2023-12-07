@@ -67,7 +67,7 @@ function getScore(opponent: HAND, strategy: STRATEGY): number {
 }
 
 export async function answer2(path: string) {
-  const [rstream, f] = await lineStream(path);
+  const [rstream, close] = await lineStream(path);
 
   let total = 0;
 
@@ -80,7 +80,7 @@ export async function answer2(path: string) {
     total += getScore(opponent as HAND, strategy as STRATEGY);
   }
 
-  f.close();
+  close();
 
   return total;
 }

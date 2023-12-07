@@ -1,6 +1,4 @@
 {
   "deno.enable": true,
-  "deno.codeLens.testArgs": [
-    "--allow-read"
-  ]
+  "deno.lint": true
 }

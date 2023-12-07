@@ -16,7 +16,7 @@ function overwrapped(first: number[], second: number[]): boolean {
 }
 
 export async function two(path: string): Promise<number> {
-  const [stream, f] = await lineStream(path);
+  const [stream, close] = await lineStream(path);
 
   let sum = 0;
 
@@ -33,7 +33,7 @@ export async function two(path: string): Promise<number> {
     }
   }
 
-  f.close();
+  close();
 
   return sum;
 }

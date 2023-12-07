@@ -3,7 +3,7 @@ import { lineStream } from "utils/line-stream.ts";
 export async function getMax(path: string): Promise<number> {
   let max = -1;
 
-  const [rstream, f] = await lineStream(path);
+  const [rstream, close] = await lineStream(path);
 
   let tmp = 0;
   for await (const rawLine of rstream) {
@@ -20,7 +20,7 @@ export async function getMax(path: string): Promise<number> {
     tmp += n;
   }
 
-  f.close();
+  close();
 
   return max;
 }

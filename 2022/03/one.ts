@@ -36,7 +36,7 @@ function findCommonChar(a: string[], b: string[]): string {
 }
 
 export async function one(path: string): Promise<number> {
-  const [stream, f] = await lineStream(path);
+  const [stream, close] = await lineStream(path);
 
   let sum = 0;
 
@@ -65,7 +65,7 @@ export async function one(path: string): Promise<number> {
     sum += AlphebetScore[s];
   }
 
-  f.close();
+  close();
 
   return sum;
 }

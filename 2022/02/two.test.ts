@@ -1,4 +1,4 @@
-import { assertEquals } from "std/testing/asserts.ts";
+import { assertEquals } from "std/assert/mod.ts";
 import { answer2 } from "./two.ts";
 
 Deno.test("two", async () => {
