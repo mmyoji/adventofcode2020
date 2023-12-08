@@ -10,7 +10,7 @@ type PlantMap = {
 function getMappedValue(target: number, maps: PlantMap[]): number | undefined {
   for (const map of maps) {
     const src = map.src0;
-    if (target < src || src + map.range < target) {
+    if (target < src || src + map.range - 1 < target) {
       continue;
     }
 

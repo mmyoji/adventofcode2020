@@ -26,7 +26,7 @@ function initPlantMaps(): PlantMap[][] {
 function getMappedValue(target: number, maps: PlantMap[]): number | undefined {
   for (const map of maps) {
     const src = map.src0;
-    if (target < src || src + map.range < target) {
+    if (target < src || src + map.range - 1 < target) {
       continue;
     }
 
@@ -131,5 +131,5 @@ if (import.meta.main) {
   // answer: 551761867
 
   console.log(`Q2:`, await question2("05/inputs.txt"));
-  // answer: 57451710 (wrong)
+  // answer: 57451709
 }
