@@ -22,14 +22,14 @@ function getMappedValue(target: number, maps: PlantMap[]): number | undefined {
 }
 
 self.onmessage = (e) => {
-  const { start, range, plantMaps } = e.data as {
+  const { start, length, plantMaps } = e.data as {
     start: number;
-    range: number;
+    length: number;
     plantMaps: PlantMap[][];
   };
 
   let min = Number.MAX_SAFE_INTEGER;
-  for (let seed = start; seed < start + range; seed++) {
+  for (let seed = start; seed < start + length; seed++) {
     let next = seed;
     for (const maps of plantMaps) {
       next = getMappedValue(next, maps) ?? next;

@@ -23,35 +23,6 @@ function initPlantMaps(): PlantMap[][] {
   ];
 }
 
-function getMapPosition(line: string): number | undefined {
-  switch (true) {
-    case line.startsWith("seed-to-"): {
-      return 0;
-    }
-    case (line.startsWith("soil-to-")): {
-      return 1;
-    }
-    case (line.startsWith("fertilizer-to-")): {
-      return 2;
-    }
-    case (line.startsWith("water-to-")): {
-      return 3;
-    }
-    case (line.startsWith("light-to-")): {
-      return 4;
-    }
-    case (line.startsWith("temperature-to-")): {
-      return 5;
-    }
-    case (line.startsWith("humidity-to-")): {
-      return 6;
-    }
-    default: {
-      return;
-    }
-  }
-}
-
 function getMappedValue(target: number, maps: PlantMap[]): number | undefined {
   for (const map of maps) {
     const src = map.src0;
@@ -69,29 +40,19 @@ function getMappedValue(target: number, maps: PlantMap[]): number | undefined {
 export async function question1(path: string) {
   const lines = await readLines(path);
 
-  const seeds: number[] = [];
+  const [_, seedNumbers] = lines[0].split("seeds: ");
+  const seeds = seedNumbers.split(" ").map(Number);
   const plantMaps = initPlantMaps();
 
-  let current = -1;
-
-  for (const line of lines) {
-    if (line.startsWith("seeds:")) {
-      const [_, rest] = line.split("seeds: ");
-      seeds.push(...rest.split(" ").map(Number));
+  let i = -1;
+  for (const line of lines.slice(1, lines.length)) {
+    if (!line.trim()) continue;
+    if (line.endsWith(" map:")) {
+      i++;
       continue;
     }
 
-    const v = getMapPosition(line);
-    if (typeof v === "number") {
-      current = v;
-      continue;
-    }
-
-    if (line.trim() === "") continue;
-
-    if (current < 0) continue;
-
-    plantMaps[current].push(parsePlantMap(line));
+    plantMaps[i].push(parsePlantMap(line));
   }
 
   let min = Number.MAX_SAFE_INTEGER;
@@ -127,15 +88,13 @@ function parseSeeds(ns: number[]): number[][] {
 }
 
 function calcMin(
-  args: { start: number; range: number; plantMaps: PlantMap[][] },
+  args: { start: number; length: number; plantMaps: PlantMap[][] },
 ): Promise<number> {
   return new Promise((resolve) => {
     const worker = new Worker(new URL("./worker.ts", import.meta.url).href, {
       type: "module",
     });
-
     worker.postMessage(args);
-
     worker.onmessage = (e) => {
       resolve(e.data);
     };
@@ -146,33 +105,23 @@ function calcMin(
 export async function question2(path: string) {
   const lines = await readLines(path);
 
-  const seeds: number[][] = [];
+  const [, rest] = lines[0].split("seeds: ");
+  const seeds = parseSeeds(rest.split(" ").map(Number));
   const plantMaps = initPlantMaps();
 
-  let current = -1;
-
-  for (const line of lines) {
-    if (line.startsWith("seeds:")) {
-      const [_, rest] = line.split("seeds: ");
-      seeds.push(...parseSeeds(rest.split(" ").map(Number)));
+  let i = -1;
+  for (const line of lines.slice(1, lines.length)) {
+    if (!line.trim()) continue;
+    if (line.endsWith(" map:")) {
+      i++;
       continue;
     }
 
-    const v = getMapPosition(line);
-    if (typeof v === "number") {
-      current = v;
-      continue;
-    }
-
-    if (line.trim() === "") continue;
-
-    if (current < 0) continue;
-
-    plantMaps[current].push(parsePlantMap(line));
+    plantMaps[i].push(parsePlantMap(line));
   }
 
   const ns = await Promise.all(
-    seeds.map(([start, range]) => calcMin({ start, range, plantMaps })),
+    seeds.map(([start, length]) => calcMin({ start, length, plantMaps })),
   );
   return Math.min(...ns);
 }
